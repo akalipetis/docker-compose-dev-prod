@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  hostname:
+    build: ./
+    image: akalipetis/flask-hostname:latest
+    command: flask run --host=0.0.0.0
+    environment:
+      - FLASK_APP=app.py
+    ports:
+      - 5000:5000
+    deploy:
+      mode: replicated
+      replicas: 6
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
