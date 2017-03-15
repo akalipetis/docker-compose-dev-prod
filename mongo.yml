@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  mongo-01:
+    image: mongo:3.4
+    networks:
+      - mongonet
+    volumes:
+      - mongo01:/data/db
+    deploy:
+      placement:
+        constraints:
+          - node.hostname==node1
+  mongo-02:
+    image: mongo:3.4
+    networks:
+      - mongonet
+    volumes:
+      - mongo02:/data/db
+    deploy:
+      placement:
+        constraints:
+          - node.hostname==node2
+  mongo-03:
+    image: mongo:3.4
+    networks:
+      - mongonet
+    volumes:
+      - mongo03:/data/db
+    deploy:
+      placement:
+        constraints:
+          - node.hostname==node3
+
+networks:
+  mongonet:
+    external: true
+
+volumes:
+  mongo01:
+    external: true
+  mongo02:
+    external: true
+  mongo03:
+    external: true
