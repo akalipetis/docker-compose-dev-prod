@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  drone-server:
+    image: drone/drone:0.5
+    environment:
+      - DRONE_SECRET=some-secret
+      - DRONE_OPEN=true
+      - DRONE_BITBUCKET=true
+      - DRONE_BITBUCKET_CLIENT=some-client
+      - DRONE_BITBUCKET_SECRET=some-secret
+      - DRONE_ORGS=adaplocom
+      - DRONE_DATABASE_DRIVER=postgres
+      - DRONE_DATABASE_DATASOURCE=postgres://postgres:pgp@55@postgres:5432/drone?sslmode=disable
+
+  agent:
+    image: drone/drone:0.5
+    command: agent
+    environment:
+      - DRONE_SECRET=some-secret
+      - DRONE_SERVER=ws://drone-server:8000/ws/broker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+    deploy:
+      mode: global
+
+  postgres:
+    image: postgres:9.6.1
+    environment:
+      POSTGRES_DB: drone
+      POSTGRES_PASSWORD: pgp@55
+    volumes:
+      - pg:/var/lib/postgresql/data:rw
+    deploy:
+      placement:
+        constraints:
+          - node.hostname==node2
+
+volumes:
+  pg:
