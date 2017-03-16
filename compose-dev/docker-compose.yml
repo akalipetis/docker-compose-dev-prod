@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  nodeex:
+    build: .
+    command: npm run dev
+    ports:
+      - '3000:3000'
+      - '5858:5858'
+    volumes:
+      - .:/home/nodeEx/code
+    healthcheck:
+      test: ["CMD", "curl -fail http://localhost:3000/health || exit 1"]
+      interval: 2s
+      timeout: 1s
+      retries: 1
+  mongo1:
+    image: mongo
+    volumes:
+      - ./dbdata:/dbdata
+    command: mongod --dbpath /dbdata --smallfiles

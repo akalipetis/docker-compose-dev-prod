@@ -1,0 +1,23 @@
+{
+  "name": "compose-dev",
+  "version": "1.0.0",
+  "description": "Demo app for Docker Compose in development",
+  "main": "app.js",
+  "dependencies": {
+    "consolidate": "^0.14.5",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.21",
+    "nunjucks": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon --debug=5858"
+  },
+  "keywords": [],
+  "author": "igneel64",
+  "license": "ISC"
+}
