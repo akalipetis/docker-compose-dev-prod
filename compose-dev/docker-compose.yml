@@ -17,5 +17,8 @@ services:
   mongo1:
     image: mongo
     volumes:
-      - ./dbdata:/dbdata
+      - dbdata:/dbdata
     command: mongod --dbpath /dbdata --smallfiles
+
+volumes:
+  dbdata:

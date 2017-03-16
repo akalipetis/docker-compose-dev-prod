@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  hostname:
+    build: ./
+    image: akalipetis/flask-hostname:latest
+    command: flask run --host=0.0.0.0
+    environment:
+      - FLASK_APP=app.py
+    ports:
+      - 5001:5000
+    deploy:
+      mode: replicated
+      replicas: 8
+      resources:
+        limits:
+          cpus: '16.0'
+          memory: 4G
+        reservations:
+          cpus: '8.0'
+          memory: 2G
