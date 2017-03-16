@@ -1,7 +1,15 @@
+# This requires a network to be created in advance
+# docker network create -d overlay --attachable mongonet
+# Initialize the replica set by connecting and running
+# rs.initiate( { _id : "my-replica-set", members: [ { _id : 0, host : "mongo-01:27017" } ]})
+# Add members
+# rs.add("mongo-02")
+# rs.add("mongo-03")
 version: '3'
 
 services:
   mongo-01:
+    command: mongod --replSet "my-replica-set"
     image: mongo:3.4
     networks:
       - mongonet
@@ -12,6 +20,7 @@ services:
         constraints:
           - node.hostname==node1
   mongo-02:
+    command: mongod --replSet "my-replica-set"
     image: mongo:3.4
     networks:
       - mongonet
@@ -22,6 +31,7 @@ services:
         constraints:
           - node.hostname==node2
   mongo-03:
+    command: mongod --replSet "my-replica-set"
     image: mongo:3.4
     networks:
       - mongonet
