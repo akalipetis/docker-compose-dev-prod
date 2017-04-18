@@ -1,3 +1,4 @@
 .vscode/
 .DS_Store
 compose-dev/dbdata
+__pycache__
